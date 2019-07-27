@@ -1,5 +1,9 @@
 # $OpenBSD$
 
+# Call unveil(2) in combination with unlink(2) and chroot(2).
+# Use unmount to check that the mountpoint leaks no vnode.
+# There were vnode reference counting bugs in the kernel.
+
 PROGS=		unveil-unlink unveil-chroot
 CLEANFILES=	diskimage
 
