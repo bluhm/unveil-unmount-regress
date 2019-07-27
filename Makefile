@@ -26,12 +26,12 @@ unconfig:
 	-vnconfig -u vnd0 2>/dev/null || true
 	-rm -f stamp-setup
 
-REGRESS_SETUP	=	mount
+REGRESS_SETUP	=	${PROGS} mount
 REGRESS_CLEANUP =	unconfig
 REGRESS_TARGETS =
 
 REGRESS_TARGETS +=	run-unlink
-run-unlink: unveil-unlink
+run-unlink:
 	@echo '\n======== $@ ========'
 	# unlink a file in an unveiled directory
 	mkdir -p /mnt/regress-unveil/foo
@@ -39,7 +39,7 @@ run-unlink: unveil-unlink
 	umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chroot
-run-chroot: unveil-chroot
+run-chroot:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil
@@ -47,15 +47,23 @@ run-chroot: unveil-chroot
 	umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chroot-dir
-run-chroot-dir: unveil-chroot
+run-chroot-dir:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil/foo
 	./unveil-chroot /mnt/regress-unveil/foo /
 	umount /mnt/regress-unveil
 
-REGRESS_TARGETS +=	run-chroot-subdir
-run-chroot-subdir: unveil-chroot
+REGRESS_TARGETS +=	run-chroot-unveil-dir
+run-chroot-unveil-dir:
+	@echo '\n======== $@ ========'
+	# unveil in a chroot environment
+	mkdir -p /mnt/regress-unveil/foo
+	./unveil-chroot /mnt/regress-unveil /foo
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chroot-dir-unveil-dir
+run-chroot-dir-unveil-dir:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil/foo/bar
@@ -63,7 +71,7 @@ run-chroot-subdir: unveil-chroot
 	umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chroot-open
-run-chroot-open: unveil-chroot
+run-chroot-open:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil
@@ -72,7 +80,7 @@ run-chroot-open: unveil-chroot
 	umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chroot-dir-open
-run-chroot-dir-open: unveil-chroot
+run-chroot-dir-open:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil/foo
@@ -80,8 +88,17 @@ run-chroot-dir-open: unveil-chroot
 	./unveil-chroot /mnt/regress-unveil/foo / /baz
 	umount /mnt/regress-unveil
 
-REGRESS_TARGETS +=	run-chroot-subdir-open
-run-chroot-subdir-open: unveil-chroot
+REGRESS_TARGETS +=	run-chroot-unveil-dir-open
+run-chroot-unveil-dir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chroot environment
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-chroot /mnt/regress-unveil /foo /baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chroot-dir-unveil-dir-open
+run-chroot-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil/foo/bar
