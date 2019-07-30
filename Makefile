@@ -4,7 +4,7 @@
 # Use unmount to check that the mountpoint leaks no vnode.
 # There were vnode reference counting bugs in the kernel.
 
-PROGS=		unveil-unlink unveil-chroot
+PROGS=		unveil-unlink unveil-chroot unveil-perm
 CLEANFILES=	diskimage
 
 .PHONY: mount unconfig clean
@@ -104,6 +104,76 @@ run-chroot-dir-unveil-dir-open:
 	mkdir -p /mnt/regress-unveil/foo/bar
 	touch /mnt/regress-unveil/foo/bar/baz
 	./unveil-chroot /mnt/regress-unveil/foo /bar /baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm
+run-perm:
+	@echo '\n======== $@ ========'
+	# unveil in a perm environment
+	mkdir -p /mnt/regress-unveil
+	./unveil-perm "" /mnt/regress-unveil
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-dir
+run-perm-dir:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil/foo
+	./unveil-perm "" /mnt/regress-unveil/foo
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-open
+run-perm-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil
+	touch /mnt/regress-unveil/baz
+	./unveil-perm "" /mnt/regress-unveil baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-dir-open
+run-perm-dir-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-perm "" /mnt/regress-unveil/foo baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-create-open
+run-perm-create-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil
+	touch /mnt/regress-unveil/baz
+	./unveil-perm "c" /mnt/regress-unveil baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-dir-create-open
+run-perm-dir-create-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-perm "c" /mnt/regress-unveil/foo baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-write-open
+run-perm-write-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil
+	touch /mnt/regress-unveil/baz
+	./unveil-perm "w" /mnt/regress-unveil baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-perm-dir-write-open
+run-perm-dir-write-open:
+	@echo '\n======== $@ ========'
+	# unveil with permission
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-perm "w" /mnt/regress-unveil/foo baz
 	umount /mnt/regress-unveil
 
 .include <bsd.regress.mk>
