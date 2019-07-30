@@ -102,7 +102,7 @@ run-chroot-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
 	# unveil in a chroot environment
 	mkdir -p /mnt/regress-unveil/foo/bar
-	mkdir -p /mnt/regress-unveil/foo/bar/baz
+	touch /mnt/regress-unveil/foo/bar/baz
 	./unveil-chroot /mnt/regress-unveil/foo /bar /baz
 	umount /mnt/regress-unveil
 
