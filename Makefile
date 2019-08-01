@@ -201,12 +201,28 @@ run-chdir-unveil-dir:
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo
 	${SUDO} umount /mnt/regress-unveil
 
+REGRESS_TARGETS +=	run-chdir-unveil-backdir
+run-chdir-unveil-backdir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/..
+	${SUDO} umount /mnt/regress-unveil
+
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir
 run-chdir-dir-unveil-dir:
 	@echo '\n======== $@ ========'
 	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-backdir
+run-chdir-dir-unveil-backdir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/..
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chdir-open
@@ -236,6 +252,15 @@ run-chdir-unveil-dir-open:
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo baz
 	${SUDO} umount /mnt/regress-unveil
 
+REGRESS_TARGETS +=	run-chdir-unveil-backdir-open
+run-chdir-unveil-backdir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} touch /mnt/regress-unveil/baz
+	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/.. baz
+	${SUDO} umount /mnt/regress-unveil
+
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir-open
 run-chdir-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
@@ -243,6 +268,15 @@ run-chdir-dir-unveil-dir-open:
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/bar/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar baz
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-backdir-open
+run-chdir-dir-unveil-backdir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} touch /mnt/regress-unveil/foo/baz
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/.. baz
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_ROOT_TARGETS =	${REGRESS_TARGETS}
