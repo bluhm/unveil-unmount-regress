@@ -10,6 +10,7 @@ CLEANFILES=	diskimage
 .PHONY: mount unconfig clean
 
 diskimage: unconfig
+	@echo '\n======== $@ ========'
 	${SUDO} dd if=/dev/zero of=diskimage bs=512 count=4k
 	${SUDO} vnconfig vnd0 diskimage
 	${SUDO} newfs vnd0c
