@@ -209,6 +209,14 @@ run-chdir-unveil-backdir:
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/..
 	${SUDO} umount /mnt/regress-unveil
 
+REGRESS_TARGETS +=	run-chdir-unveil-dotdot
+run-chdir-unveil-dotdot:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo ..
+	${SUDO} umount /mnt/regress-unveil
+
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir
 run-chdir-dir-unveil-dir:
 	@echo '\n======== $@ ========'
@@ -223,6 +231,14 @@ run-chdir-dir-unveil-backdir:
 	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/..
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-dotdot
+run-chdir-dir-unveil-dotdot:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo/bar ..
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chdir-open
@@ -240,7 +256,7 @@ run-chdir-dir-open:
 	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
-	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo  baz
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo . baz
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_TARGETS +=	run-chdir-unveil-dir-open
@@ -261,6 +277,15 @@ run-chdir-unveil-backdir-open:
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/.. baz
 	${SUDO} umount /mnt/regress-unveil
 
+REGRESS_TARGETS +=	run-chdir-unveil-dotdot-open
+run-chdir-unveil-dotdot-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} touch /mnt/regress-unveil/baz
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo .. baz
+	${SUDO} umount /mnt/regress-unveil
+
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir-open
 run-chdir-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
@@ -277,6 +302,15 @@ run-chdir-dir-unveil-backdir-open:
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/.. baz
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-dotdot-open
+run-chdir-dir-unveil-dotdot-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} touch /mnt/regress-unveil/foo/baz
+	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo/bar .. baz
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_ROOT_TARGETS =	${REGRESS_TARGETS}
