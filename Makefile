@@ -1,7 +1,7 @@
-# $OpenBSD$
+# $OpenBSD: Makefile,v 1.1.1.1 2019/08/01 15:20:51 bluhm Exp $
 
 # Call unveil(2) in combination with unlink(2) and chroot(2).
-# Use unmount to check that the mountpoint leaks no vnode.
+# Use umount(8) to check that the mountpoint leaks no vnode.
 # There were vnode reference counting bugs in the kernel.
 
 PROGS=		unveil-unlink unveil-chroot unveil-perm
