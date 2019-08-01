@@ -5,12 +5,12 @@
 # There were vnode reference counting bugs in the kernel.
 
 PROGS=		unveil-unlink unveil-chroot unveil-perm
-CLEANFILES=	diskimage
+CLEANFILES=	diskimage baz
 
 .PHONY: mount unconfig clean
 
 diskimage: unconfig
-	dd if=/dev/zero of=diskimage bs=512 count=4k
+	dd if=/dev/null of=diskimage bs=1m seek=1
 	vnconfig vnd0 diskimage
 	newfs vnd0c
 
@@ -174,6 +174,22 @@ run-perm-dir-write-open:
 	mkdir -p /mnt/regress-unveil/foo
 	touch /mnt/regress-unveil/foo/baz
 	./unveil-perm "w" /mnt/regress-unveil/foo baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-rsync-to
+run-rsync-to:
+	@echo '\n======== $@ ========'
+	# openrsync uses unveil
+	touch baz
+	openrsync --rsync-path=/usr/bin/openrsync baz /mnt/regress-unveil/
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-rsync-from
+run-rsync-from:
+	@echo '\n======== $@ ========'
+	# openrsync uses unveil
+	touch /mnt/regress-unveil/baz
+	cd /mnt/regress-unveil && openrsync --rsync-path=/usr/bin/openrsync -r . ${.OBJDIR}
 	umount /mnt/regress-unveil
 
 .include <bsd.regress.mk>
