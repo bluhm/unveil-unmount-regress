@@ -15,8 +15,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <sys/stat.h>
-
 #include <err.h>
 #include <fcntl.h>
 #include <stdio.h>

@@ -29,9 +29,9 @@ main(int argc, char *argv[])
 	if (argc != 3 && argc != 4)
 		errx(2, "usage: unveil-perm perm dir [file]");
 
-        perm = argv[1];
-        dir = argv[2];
-        file = argv[3];
+	perm = argv[1];
+	dir = argv[2];
+	file = argv[3];
 	if (file != NULL) {
 		if (asprintf(&path, "%s/%s", dir, file) == -1)
 			err(1, "asprintf");
