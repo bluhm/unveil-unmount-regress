@@ -34,7 +34,6 @@ REGRESS_TARGETS =
 REGRESS_TARGETS +=	run-unlink
 run-unlink:
 	@echo '\n======== $@ ========'
-	# unlink a file in an unveiled directory
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-unlink /mnt/regress-unveil/foo bar
 	${SUDO} umount /mnt/regress-unveil
@@ -42,7 +41,6 @@ run-unlink:
 REGRESS_TARGETS +=	run-chroot
 run-chroot:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} ./unveil-chroot /mnt/regress-unveil /
 	${SUDO} umount /mnt/regress-unveil
@@ -50,7 +48,6 @@ run-chroot:
 REGRESS_TARGETS +=	run-chroot-dir
 run-chroot-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chroot /mnt/regress-unveil/foo /
 	${SUDO} umount /mnt/regress-unveil
@@ -58,7 +55,6 @@ run-chroot-dir:
 REGRESS_TARGETS +=	run-chroot-unveil-dir
 run-chroot-unveil-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chroot /mnt/regress-unveil /foo
 	${SUDO} umount /mnt/regress-unveil
@@ -66,7 +62,6 @@ run-chroot-unveil-dir:
 REGRESS_TARGETS +=	run-chroot-dir-unveil-dir
 run-chroot-dir-unveil-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chroot /mnt/regress-unveil/foo /bar
 	${SUDO} umount /mnt/regress-unveil
@@ -74,7 +69,6 @@ run-chroot-dir-unveil-dir:
 REGRESS_TARGETS +=	run-chroot-open
 run-chroot-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-chroot /mnt/regress-unveil / /baz
@@ -83,7 +77,6 @@ run-chroot-open:
 REGRESS_TARGETS +=	run-chroot-dir-open
 run-chroot-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chroot /mnt/regress-unveil/foo / /baz
@@ -92,7 +85,6 @@ run-chroot-dir-open:
 REGRESS_TARGETS +=	run-chroot-unveil-dir-open
 run-chroot-unveil-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chroot /mnt/regress-unveil /foo /baz
@@ -101,7 +93,6 @@ run-chroot-unveil-dir-open:
 REGRESS_TARGETS +=	run-chroot-dir-unveil-dir-open
 run-chroot-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chroot environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/bar/baz
 	${SUDO} ./unveil-chroot /mnt/regress-unveil/foo /bar /baz
@@ -110,7 +101,6 @@ run-chroot-dir-unveil-dir-open:
 REGRESS_TARGETS +=	run-perm
 run-perm:
 	@echo '\n======== $@ ========'
-	# unveil in a perm environment
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} ./unveil-perm "" /mnt/regress-unveil
 	${SUDO} umount /mnt/regress-unveil
@@ -118,7 +108,6 @@ run-perm:
 REGRESS_TARGETS +=	run-perm-dir
 run-perm-dir:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-perm "" /mnt/regress-unveil/foo
 	${SUDO} umount /mnt/regress-unveil
@@ -126,7 +115,6 @@ run-perm-dir:
 REGRESS_TARGETS +=	run-perm-open
 run-perm-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-perm "" /mnt/regress-unveil baz
@@ -135,7 +123,6 @@ run-perm-open:
 REGRESS_TARGETS +=	run-perm-dir-open
 run-perm-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-perm "" /mnt/regress-unveil/foo baz
@@ -144,7 +131,6 @@ run-perm-dir-open:
 REGRESS_TARGETS +=	run-perm-create-open
 run-perm-create-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-perm "c" /mnt/regress-unveil baz
@@ -153,7 +139,6 @@ run-perm-create-open:
 REGRESS_TARGETS +=	run-perm-dir-create-open
 run-perm-dir-create-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-perm "c" /mnt/regress-unveil/foo baz
@@ -162,7 +147,6 @@ run-perm-dir-create-open:
 REGRESS_TARGETS +=	run-perm-write-open
 run-perm-write-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-perm "w" /mnt/regress-unveil baz
@@ -171,7 +155,6 @@ run-perm-write-open:
 REGRESS_TARGETS +=	run-perm-dir-write-open
 run-perm-dir-write-open:
 	@echo '\n======== $@ ========'
-	# unveil with permission
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-perm "w" /mnt/regress-unveil/foo baz
@@ -180,7 +163,6 @@ run-perm-dir-write-open:
 REGRESS_TARGETS +=	run-chdir
 run-chdir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} ./unveil-chdir /mnt/regress-unveil .
 	${SUDO} umount /mnt/regress-unveil
@@ -188,7 +170,6 @@ run-chdir:
 REGRESS_TARGETS +=	run-chdir-dir
 run-chdir-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo .
 	${SUDO} umount /mnt/regress-unveil
@@ -196,7 +177,6 @@ run-chdir-dir:
 REGRESS_TARGETS +=	run-chdir-unveil-dir
 run-chdir-unveil-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo
 	${SUDO} umount /mnt/regress-unveil
@@ -204,7 +184,6 @@ run-chdir-unveil-dir:
 REGRESS_TARGETS +=	run-chdir-unveil-backdir
 run-chdir-unveil-backdir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/..
 	${SUDO} umount /mnt/regress-unveil
@@ -212,7 +191,6 @@ run-chdir-unveil-backdir:
 REGRESS_TARGETS +=	run-chdir-unveil-dotdot
 run-chdir-unveil-dotdot:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo ..
 	${SUDO} umount /mnt/regress-unveil
@@ -220,7 +198,6 @@ run-chdir-unveil-dotdot:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir
 run-chdir-dir-unveil-dir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar
 	${SUDO} umount /mnt/regress-unveil
@@ -228,7 +205,6 @@ run-chdir-dir-unveil-dir:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-backdir
 run-chdir-dir-unveil-backdir:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/..
 	${SUDO} umount /mnt/regress-unveil
@@ -236,7 +212,6 @@ run-chdir-dir-unveil-backdir:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dotdot
 run-chdir-dir-unveil-dotdot:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo/bar ..
 	${SUDO} umount /mnt/regress-unveil
@@ -244,7 +219,6 @@ run-chdir-dir-unveil-dotdot:
 REGRESS_TARGETS +=	run-chdir-open
 run-chdir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil . baz
@@ -253,7 +227,6 @@ run-chdir-open:
 REGRESS_TARGETS +=	run-chdir-dir-open
 run-chdir-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo . baz
@@ -262,7 +235,6 @@ run-chdir-dir-open:
 REGRESS_TARGETS +=	run-chdir-unveil-dir-open
 run-chdir-unveil-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo baz
@@ -271,7 +243,6 @@ run-chdir-unveil-dir-open:
 REGRESS_TARGETS +=	run-chdir-unveil-backdir-open
 run-chdir-unveil-backdir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil foo/.. baz
@@ -280,7 +251,6 @@ run-chdir-unveil-backdir-open:
 REGRESS_TARGETS +=	run-chdir-unveil-dotdot-open
 run-chdir-unveil-dotdot-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo
 	${SUDO} touch /mnt/regress-unveil/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo .. baz
@@ -289,7 +259,6 @@ run-chdir-unveil-dotdot-open:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dir-open
 run-chdir-dir-unveil-dir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/bar/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar baz
@@ -298,7 +267,6 @@ run-chdir-dir-unveil-dir-open:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-backdir-open
 run-chdir-dir-unveil-backdir-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar/.. baz
@@ -307,7 +275,6 @@ run-chdir-dir-unveil-backdir-open:
 REGRESS_TARGETS +=	run-chdir-dir-unveil-dotdot-open
 run-chdir-dir-unveil-dotdot-open:
 	@echo '\n======== $@ ========'
-	# unveil in a chdir environment
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo/bar .. baz
