@@ -1,10 +1,10 @@
 # $OpenBSD$
 
-# Call unveil(2) in combination with unlink(2) and chroot(2).
+# Call unveil(2) in combination with unlink(2), chroot(2), chdir(2).
 # Use unmount to check that the mountpoint leaks no vnode.
 # There were vnode reference counting bugs in the kernel.
 
-PROGS=		unveil-unlink unveil-chroot unveil-perm
+PROGS=		unveil-unlink unveil-chroot unveil-perm unveil-chdir
 CLEANFILES=	diskimage
 
 .PHONY: mount unconfig clean
@@ -174,6 +174,74 @@ run-perm-dir-write-open:
 	mkdir -p /mnt/regress-unveil/foo
 	touch /mnt/regress-unveil/foo/baz
 	./unveil-perm "w" /mnt/regress-unveil/foo baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir
+run-chdir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil
+	./unveil-chdir /mnt/regress-unveil .
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir
+run-chdir-dir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo
+	./unveil-chdir /mnt/regress-unveil/foo .
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-unveil-dir
+run-chdir-unveil-dir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo
+	./unveil-chdir /mnt/regress-unveil foo
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-dir
+run-chdir-dir-unveil-dir:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo/bar
+	./unveil-chdir /mnt/regress-unveil/foo bar
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-open
+run-chdir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil
+	touch /mnt/regress-unveil/baz
+	./unveil-chdir /mnt/regress-unveil . baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-open
+run-chdir-dir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-chdir /mnt/regress-unveil/foo  baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-unveil-dir-open
+run-chdir-unveil-dir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo
+	touch /mnt/regress-unveil/foo/baz
+	./unveil-chdir /mnt/regress-unveil foo baz
+	umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-unveil-dir-open
+run-chdir-dir-unveil-dir-open:
+	@echo '\n======== $@ ========'
+	# unveil in a chdir environment
+	mkdir -p /mnt/regress-unveil/foo/bar
+	touch /mnt/regress-unveil/foo/bar/baz
+	./unveil-chdir /mnt/regress-unveil/foo bar baz
 	umount /mnt/regress-unveil
 
 .include <bsd.regress.mk>
