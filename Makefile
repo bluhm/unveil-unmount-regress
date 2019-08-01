@@ -176,8 +176,6 @@ run-perm-dir-write-open:
 	${SUDO} ./unveil-perm "w" /mnt/regress-unveil/foo baz
 	${SUDO} umount /mnt/regress-unveil
 
-REGRESS_ROOT_TARGETS =	${REGRESS_TARGETS}
-
 REGRESS_TARGETS +=	run-chdir
 run-chdir:
 	@echo '\n======== $@ ========'
@@ -245,5 +243,7 @@ run-chdir-dir-unveil-dir-open:
 	touch /mnt/regress-unveil/foo/bar/baz
 	./unveil-chdir /mnt/regress-unveil/foo bar baz
 	umount /mnt/regress-unveil
+
+REGRESS_ROOT_TARGETS =	${REGRESS_TARGETS}
 
 .include <bsd.regress.mk>
