@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2019/08/01 15:20:51 bluhm Exp $
+# $OpenBSD$
 
 # Call unveil(2) in combination with unlink(2), chroot(2), chdir(2).
+# Call realpath(3) in combination with chroot(2), chdir(2).
 # Use umount(8) to check that the mountpoint leaks no vnode.
 # There were vnode reference counting bugs in the kernel.
 
 PROGS=		unveil-unlink unveil-chroot unveil-perm unveil-chdir
+PROGS+=		realpath-chroot realpath-chdir
 CLEANFILES=	diskimage
 
 .PHONY: mount unconfig clean
@@ -243,6 +245,70 @@ run-chdir-dir-unveil-dir-open:
 	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
 	${SUDO} touch /mnt/regress-unveil/foo/bar/baz
 	${SUDO} ./unveil-chdir /mnt/regress-unveil/foo bar baz
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-realpath-chroot
+run-realpath-chroot:
+	@echo '\n======== $@ ========'
+	# ralpath in a chroot environment
+	${SUDO} mkdir -p /mnt/regress-unveil
+	${SUDO} ./realpath-chroot /mnt/regress-unveil /
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-realpath-chroot-dir
+run-realpath-chroot-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chroot environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./realpath-chroot /mnt/regress-unveil/foo /
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chroot-realpath-dir
+run-chroot-realpath-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chroot environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./realpath-chroot /mnt/regress-unveil /foo
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chroot-dir-realpath-dir
+run-chroot-dir-realpath-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chroot environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} ./realpath-chroot /mnt/regress-unveil/foo /bar
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-realpath-chdir
+run-realpath-chdir:
+	@echo '\n======== $@ ========'
+	# realpath in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil
+	${SUDO} ./realpath-chdir /mnt/regress-unveil .
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-realpath-chdir-dir
+run-realpath-chdir-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./realpath-chdir /mnt/regress-unveil/foo .
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-ralpath-dir
+run-chdir-realpath-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo
+	${SUDO} ./realpath-chdir /mnt/regress-unveil foo
+	${SUDO} umount /mnt/regress-unveil
+
+REGRESS_TARGETS +=	run-chdir-dir-realpath-dir
+run-chdir-dir-realpath-dir:
+	@echo '\n======== $@ ========'
+	# realpath in a chdir environment
+	${SUDO} mkdir -p /mnt/regress-unveil/foo/bar
+	${SUDO} ./realpath-chdir /mnt/regress-unveil/foo bar
 	${SUDO} umount /mnt/regress-unveil
 
 REGRESS_ROOT_TARGETS =	${REGRESS_TARGETS}
