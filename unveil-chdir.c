@@ -1,4 +1,4 @@
-/*	$OpenBSD$	*/
+/*	$OpenBSD: unveil-chdir.c,v 1.1 2019/08/04 09:00:17 bluhm Exp $	*/
 /*
  * Copyright (c) 2019 Alexander Bluhm <bluhm@openbsd.org>
  *
